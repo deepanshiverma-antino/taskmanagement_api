@@ -1,0 +1,101 @@
+ Task Management API - Complete Project Structure
+
+task-management-api/
+│
+├── app/
+│   ├── __init__.py
+│   ├── main.py                    # Application entry point
+│   ├── config.py                  # Configuration settings
+│   │
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── user.py               # User model
+│   │   └── task.py               # Task model
+│   │
+│   ├── schemas/
+│   │   ├── __init__.py
+│   │   ├── user.py               # User Pydantic schemas
+│   │   ├── task.py               # Task Pydantic schemas
+│   │   └── auth.py               # Auth schemas
+│   │
+│   ├── routes/
+│   │   ├── __init__.py
+│   │   ├── auth.py               # Authentication routes
+│   │   ├── tasks.py              # Task management routes
+│   │   └── admin.py              # Admin routes
+│   │
+│   ├── middleware/
+│   │   ├── __init__.py
+│   │   ├── auth.py               # JWT authentication
+│   │   ├── authorization.py      # Role-based access control
+│   │   └── rate_limit.py         # Rate limiting
+│   │
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── auth_service.py       # Authentication logic
+│   │   ├── task_service.py       # Task business logic
+│   │   └── user_service.py       # User business logic
+│   │
+│   ├── utils/
+│   │   ├── __init__.py
+│   │   ├── security.py           # Password hashing, JWT
+│   │   └── validators.py         # Input validation
+│   │
+│   └── database/
+│       ├── __init__.py
+│       └── database.py           # Database connection
+│
+├── tests/
+│   ├── __init__.py
+│   ├── test_auth.py
+│   ├── test_tasks.py
+│   └── test_admin.py
+│
+├── .env.example                   # Environment variables template
+├── .gitignore
+├── requirements.txt               # Python dependencies
+├── README.md                      # Project documentation
+└── docker-compose.yml            # Optional: Docker setup
+```
+
+## File Descriptions
+
+### Core Files
+- main.py: FastAPI application initialization, middleware setup, route inclusion
+- config.py: Environment variables, database settings, JWT configuration
+
+### Models
+- user.py: SQLAlchemy User model with fields (id, name, email, password, role)
+- task.py: SQLAlchemy Task model with fields (id, title, description, status, priority, dueDate, createdBy, assignedTo)
+
+### Schemas (Pydantic)
+- user.py: UserCreate, UserLogin, UserResponse, UserUpdate
+- task.py: TaskCreate, TaskUpdate, TaskResponse, TaskFilter
+- auth.py: Token, TokenData, RefreshToken
+
+### Routes
+- auth.py: `/api/v1/auth/*` - registration, login, logout, refresh, profile
+- tasks.py: `/api/v1/tasks/*` - CRUD operations, filtering, statistics
+- admin.py: `/api/v1/admin/*` - user management, role updates
+
+### Middleware
+- auth.py: JWT token verification, user extraction
+- authorization.py: Role-based permission checking
+- rate_limit.py: IP-based request limiting (100 req/15 min)
+
+### Services
+- Business logic layer separating concerns from routes
+- Handles database operations, validations, and complex operations
+
+### Utils
+- security.py: bcrypt password hashing, JWT token generation/verification
+- validators.py: Email format, password strength validation
+
+## Technology Stack
+- Framework: FastAPI 0.104+
+- Database: PostgreSQL with SQLAlchemy ORM
+- Authentication: JWT (PyJWT)
+- Password: bcrypt
+- Validation: Pydantic v2
+- Rate Limiting: slowapi
+- Testing: pytest
